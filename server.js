@@ -22,7 +22,6 @@ app.get('/video-info', async (req, res) => {
       '--dump-single-json',
       '--no-check-certificate',
       '--no-warnings',
-      '--prefer-free-formats',
       '--add-header', 'referer:youtube.com',
       '--add-header', 'user-agent:googlebot',
       url,
@@ -32,29 +31,27 @@ app.get('/video-info', async (req, res) => {
 
     const info = JSON.parse(stdout);
 
-    const filteredFormats = info.formats
-      .filter(f => f.acodec !== 'none')
-      .map(f => ({
-        format_id: f.format_id,
-        format_note: f.format_note,
-        ext: f.ext,
-        filesize: f.filesize,
-        url: f.url,
-        acodec: f.acodec,
-        vcodec: f.vcodec,
-        hasAudio: f.acodec !== 'none',
-        isVideo: f.vcodec !== 'none',
-      }));
+    const allFormats = info.formats.map(f => ({
+      format_id: f.format_id,
+      format_note: f.format_note,
+      ext: f.ext,
+      filesize: f.filesize,
+      url: f.url,
+      acodec: f.acodec,
+      vcodec: f.vcodec,
+      hasAudio: f.acodec !== 'none',
+      isVideo: f.vcodec !== 'none',
+    }));
 
-    if (filteredFormats.length === 0) {
-      return res.status(404).json({ error: 'No supported formats found' });
+    if (allFormats.length === 0) {
+      return res.status(404).json({ error: 'No formats found' });
     }
 
     return res.json({
       title: info.title,
       duration: info.duration,
       thumbnail: info.thumbnail,
-      formats: filteredFormats,
+      formats: allFormats,
       url: info.webpage_url,
     });
 
