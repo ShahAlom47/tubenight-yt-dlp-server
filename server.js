@@ -10,8 +10,9 @@ app.use(cors());
 
 const execFileAsync = util.promisify(execFile);
 
-app.get('/api/yt-info', async (req, res) => {
+app.get('/video-info', async (req, res) => {
   const url = req.query.url;
+  console.log(`Received request for URL: ${url}`);
   if (!url) return res.status(400).json({ error: 'Video URL is required' });
 
   const exePath = path.resolve(__dirname, 'bin', 'yt-dlp.exe');
