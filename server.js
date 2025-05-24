@@ -13,8 +13,9 @@ const execFileAsync = util.promisify(execFile);
 // Detect OS and set yt-dlp path accordingly
 const isWindows = process.platform === "win32";
 const ytDlpPath = isWindows
-  ? path.resolve(__dirname, "bin", "yt-dlp.exe") // Local Windows exe
-  : "yt-dlp"; // Global command for Linux (deploy)
+  ? path.resolve(__dirname, "bin", "yt-dlp.exe") // for Windows (local)
+  : path.resolve(__dirname, "bin", "yt-dlp");    // for Linux (deploy)
+
 
 app.get("/video-info", async (req, res) => {
   const url = req.query.url;
