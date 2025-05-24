@@ -39,7 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/bin/yt-dlp.exe
-/public/bin/yt-dlp.exe
-/src/bin/yt-dlp.exe
 .vercel
