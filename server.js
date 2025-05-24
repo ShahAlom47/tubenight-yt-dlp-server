@@ -11,11 +11,12 @@ app.use(cors());
 const execFileAsync = util.promisify(execFile);
 
 // Detect OS and set yt-dlp path accordingly
-const isWindows = process.platform === "win32";
-const ytDlpPath = isWindows
-  ? path.resolve(__dirname, "bin", "yt-dlp.exe") // for Windows (local)
-  : path.resolve(__dirname, "bin", "yt-dlp");    // for Linux (deploy)
+// const isWindows = process.platform === "win32";
+// const ytDlpPath = isWindows
+//   ? path.resolve(__dirname, "bin", "yt-dlp.exe") // for Windows (local)
+//   : path.resolve(__dirname, "bin", "yt-dlp");    // for Linux (deploy)
 
+  const ytDlpPath = path.resolve(__dirname, "bin", "yt-dlp");
 
 app.get("/video-info", async (req, res) => {
   const url = req.query.url;
