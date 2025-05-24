@@ -16,7 +16,7 @@ const execFileAsync = util.promisify(execFile);
 //   ? path.resolve(__dirname, "bin", "yt-dlp.exe") // for Windows (local)
 //   : path.resolve(__dirname, "bin", "yt-dlp");    // for Linux (deploy)
 
-  const ytDlpPath = path.resolve(__dirname, "bin", "yt-dlp");
+  const ytDlpPath = path.resolve("bin", "yt-dlp");
 
 app.get("/video-info", async (req, res) => {
   const url = req.query.url;
@@ -28,6 +28,7 @@ app.get("/video-info", async (req, res) => {
       "--no-playlist",
       "--force-ipv4",
       "--no-check-certificate",
+      "--cookies", path.join(__dirname, "cookies", "cookies.txt"),
       "--add-header", "referer:youtube.com",
       "--add-header", "user-agent:googlebot",
       url,
